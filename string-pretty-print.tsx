@@ -9,11 +9,19 @@ function prettyPrintString(inputString: string): string {
   // Show the actual string representation with escaped characters
   return JSON.stringify(inputString, null, 2)
     .slice(1, -1) // Remove the outer quotes
-    .replace(/\\n/g, "\\n\n") // Show \n on new lines for readability
-    .replace(/\\t/g, "\\t    ") // Show \t with visual spacing
+    .replace(/\\n/g, "\\n") // Show \n on new lines for readability
+    .replace(/\\t/g, "\\t") // Show \t with visual spacing
     .replace(/\\r/g, "\\r") // Show \r
     .replace(/\\"/g, '\\"') // Show escaped quotes
+    .replace(/\\'/g, "\\'")
     .replace(/\\\\/g, "\\\\") // Show escaped backslashes
+    .replace(/\\b/g, "\\b")
+    .replace(/\\f/g, "\\f")
+    .replace(/\\v/g, "\\v")
+    .replace(/\\0/g, "\\0")
+    // .replace(/\\u([0-9a-fA-F]{4})/g, (match, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
+    // .replace(/\\x([0-9a-fA-F]{2})/g, (match, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
+    // .replace(/\\u([0-9a-fA-F]{4})/g, (match, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
 }
 
 interface StringVersion {
