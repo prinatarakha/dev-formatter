@@ -10,16 +10,16 @@ function unescapeString(inputString: string): string {
     // Handle common escape sequences
     return (
       inputString
-        .replace(/\\n/g, "\n")
-        .replace(/\\t/g, "\t")
-        .replace(/\\r/g, "\r")
-        .replace(/\\"/g, '"')
-        .replace(/\\'/g, "'")
-        .replace(/\\\\/g, "\\")
-        .replace(/\\b/g, "\b")
-        .replace(/\\f/g, "\f")
-        .replace(/\\v/g, "\v")
-        .replace(/\\0/g, "\0")
+        .replace(/\\n/g, "\n") // Newline.
+        .replace(/\\t/g, "\t") // Tab.
+        .replace(/\\r/g, "\r") // Moves cursor to the beginning of the line. Used in Windows newlines.
+        .replace(/\\"/g, '"') // Double quote.
+        .replace(/\\'/g, "'") // Single quote.
+        .replace(/\\\\/g, "\\") // Backslash.
+        .replace(/\\b/g, "\b") // Backspace.
+        .replace(/\\f/g, "\f") // Advances to the next page in printers (rarely used today).
+        .replace(/\\v/g, "\v") // Moves cursor down to the next vertical tab stop (rarely used today).
+        .replace(/\\0/g, "\0") // Represents the null character (NOT the same as the string "0").
         // Handle unicode escapes
         .replace(/\\u([0-9a-fA-F]{4})/g, (match, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
         // Handle hex escapes

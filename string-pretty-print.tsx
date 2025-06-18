@@ -9,16 +9,16 @@ function prettyPrintString(inputString: string): string {
   // Show the actual string representation with escaped characters
   return JSON.stringify(inputString, null, 2)
     .slice(1, -1) // Remove the outer quotes
-    .replace(/\\n/g, "\\n") // Show \n on new lines for readability
-    .replace(/\\t/g, "\\t") // Show \t with visual spacing
-    .replace(/\\r/g, "\\r") // Show \r
-    .replace(/\\"/g, '\\"') // Show escaped quotes
-    .replace(/\\'/g, "\\'")
-    .replace(/\\\\/g, "\\\\") // Show escaped backslashes
-    .replace(/\\b/g, "\\b")
-    .replace(/\\f/g, "\\f")
-    .replace(/\\v/g, "\\v")
-    .replace(/\\0/g, "\\0")
+    .replace(/\\n/g, "\\n") // Newline.
+    .replace(/\\t/g, "\\t") // Tab.
+    .replace(/\\r/g, "\\r") // Moves cursor to the beginning of the line. Used in Windows newlines.
+    .replace(/\\"/g, '\\"') // Double quote.
+    .replace(/\\'/g, "\\'") // Single quote.
+    .replace(/\\\\/g, "\\\\") // Backslash.
+    .replace(/\\b/g, "\\b") // Backspace.
+    .replace(/\\f/g, "\\f") // Advances to the next page in printers (rarely used today).
+    .replace(/\\v/g, "\\v") // Moves cursor down to the next vertical tab stop (rarely used today).
+    .replace(/\\0/g, "\\0") // Represents the null character (NOT the same as the string "0").
     // .replace(/\\u([0-9a-fA-F]{4})/g, (match, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
     // .replace(/\\x([0-9a-fA-F]{2})/g, (match, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
     // .replace(/\\u([0-9a-fA-F]{4})/g, (match, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
