@@ -8,9 +8,9 @@ import Footer from "@/components/footer"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Dev Formatter",
-  description: "Markdown renderer, JSON pretty print, and String pretty print tools",
-  generator: 'rakha.id'
+  title: "Dev Formatter - Rakha.id",
+  description: "Markdown renderer, JSON pretty print, and escape/unescape string tools",
+  generator: 'rakha.id',
 }
 
 export default function RootLayout({
