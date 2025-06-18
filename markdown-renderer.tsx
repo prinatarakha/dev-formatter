@@ -13,7 +13,7 @@ function parseMarkdown(markdown: string): string {
   const codeBlocks: string[] = []
   result = result.replace(/```([\s\S]*?)```/g, (match, content) => {
     const index = codeBlocks.length
-    codeBlocks.push(`<pre><code>${content.trim()}</code></pre>`)
+    codeBlocks.push(`<pre class='bg-gray-800 p-2 rounded-md'><code class='text-sm font-mono text-white'>${content.trim()}</code></pre>`)
     return `\n__CODE_BLOCK_${index}__\n`
   })
 
@@ -21,7 +21,7 @@ function parseMarkdown(markdown: string): string {
   const codeSpans: string[] = []
   result = result.replace(/`([^`]*)`/g, (match, content) => {
     const index = codeSpans.length
-    codeSpans.push(`<code>${content}</code>`)
+    codeSpans.push(`<code class='text-sm font-mono bg-gray-100 p-1 rounded-md'>${content}</code>`)
     return `__CODE_SPAN_${index}__`
   })
 
@@ -29,9 +29,9 @@ function parseMarkdown(markdown: string): string {
   result = result.replace(/^---$/gm, "<hr>")
 
   // Headers
-  result = result.replace(/^### (.*$)/gim, "<h3>$1</h3>")
-  result = result.replace(/^## (.*$)/gim, "<h2>$1</h2>")
-  result = result.replace(/^# (.*$)/gim, "<h1>$1</h1>")
+  result = result.replace(/^### (.*$)/gim, "<h3 class='text-lg font-bold'>$1</h3>")
+  result = result.replace(/^## (.*$)/gim, "<h2 class='text-xl font-bold'>$1</h2>")
+  result = result.replace(/^# (.*$)/gim, "<h1 class='text-2xl font-bold'>$1</h1>")
 
   // Bold and Italic (only if not protected by backticks)
   result = result.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
@@ -172,7 +172,7 @@ This is a **markdown renderer** with version control!
 
 ## How to Use Lists
 
-### Bullet Points (use * or -)
+### Bullet Points (use \`*\` or \`-\`)
 * First idea or plot point
 * Second characteristic
 - Alternative bullet style
@@ -191,7 +191,7 @@ This is a **markdown renderer** with version control!
 
 ### Escaping Characters
 
-- Use backticks to show literal characters: \`*\` \`**\` \`#\`
+- Use backticks to show literal characters: \`*\`, \`**\`, \`#\`
 - The \`*\` character won't make italic when wrapped in backticks
 - Same with \`**\` for bold formatting
 - Links work like [this](https://example.com)
