@@ -26,11 +26,11 @@ function parseMarkdown(markdown: string): string {
   })
 
   // Horizontal rules (---)
-  result = result.replace(/^---$/gm, "<hr>")
+  result = result.replace(/^---$/gm, "<hr class='my-4' />")
 
   // Headers
-  result = result.replace(/^### (.*$)/gim, "<h3 class='text-lg font-bold'>$1</h3>")
-  result = result.replace(/^## (.*$)/gim, "<h2 class='text-xl font-bold'>$1</h2>")
+  result = result.replace(/^### (.*$)/gim, "<h3 class='text-lg font-bold mt-1'>$1</h3>")
+  result = result.replace(/^## (.*$)/gim, "<h2 class='text-xl font-bold mt-2'>$1</h2>")
   result = result.replace(/^# (.*$)/gim, "<h1 class='text-2xl font-bold'>$1</h1>")
 
   // Bold and Italic (only if not protected by backticks)
@@ -38,12 +38,13 @@ function parseMarkdown(markdown: string): string {
   result = result.replace(/(?<!\*)\*([^*n]+)\*(?!\*)/g, "<em>$1</em>")
 
   // Links
-  result = result.replace(/\[([^\]]*)\]$$([^)]*)$$/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+  result = result.replace(/\[([^\]]*)\]\(([^)]*)\)/g, "<a href='$2' target='_blank' rel='noopener noreferrer' class='text-blue-700 hover:text-blue-800 underline'>$1</a>")
 
   // Process lists line by line
   const lines = result.split("\n")
   const processedLines: string[] = []
-  const listStack: Array<{ type: "ul" | "ol"; level: number }> = []
+  const listStack: Array<{ type: "ul" | "ol"; level: number; startNumber?: number }> = []
+  let currentOlNumber = 1
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
@@ -59,9 +60,9 @@ function parseMarkdown(markdown: string): string {
       continue
     }
 
-    // Count leading spaces for indentation (4 spaces = 1 level)
+    // Count leading spaces for indentation (2 spaces = 1 level)
     const leadingSpaces = line.match(/^(\s*)/)?.[1] || ""
-    const indentLevel = Math.floor(leadingSpaces.length / 4)
+    const indentLevel = Math.floor(leadingSpaces.length / 2)
     const trimmedLine = line.trim()
 
     // Check for numbered list
@@ -72,6 +73,15 @@ function parseMarkdown(markdown: string): string {
     if (numberedMatch || bulletMatch) {
       const content = numberedMatch ? numberedMatch[1] : bulletMatch![1]
       const currentListType: "ul" | "ol" = numberedMatch ? "ol" : "ul"
+
+      // For numbered lists, track the actual number from markdown
+      let actualNumber = 1
+      if (numberedMatch) {
+        const numberMatch = trimmedLine.match(/^(\d+)\./)
+        if (numberMatch) {
+          actualNumber = parseInt(numberMatch[1])
+        }
+      }
 
       // Close lists that are deeper than current level
       while (listStack.length > 0 && listStack[listStack.length - 1].level >= indentLevel) {
@@ -85,8 +95,19 @@ function parseMarkdown(markdown: string): string {
         listStack[listStack.length - 1].level < indentLevel ||
         listStack[listStack.length - 1].type !== currentListType
       ) {
-        processedLines.push(`<${currentListType}>`)
-        listStack.push({ type: currentListType, level: indentLevel })
+        if (currentListType === "ol") {
+          // For ordered lists, use the start attribute to continue numbering
+          const startNumber = numberedMatch ? actualNumber : 1
+          processedLines.push(`<${currentListType} start="${startNumber}">`)
+          listStack.push({ type: currentListType, level: indentLevel, startNumber })
+          currentOlNumber = startNumber + 1
+        } else {
+          processedLines.push(`<${currentListType}>`)
+          listStack.push({ type: currentListType, level: indentLevel })
+        }
+      } else if (currentListType === "ol" && numberedMatch) {
+        // Update the expected next number for continuous numbering
+        currentOlNumber = actualNumber + 1
       }
 
       processedLines.push(`<li>${content}</li>`)
@@ -177,15 +198,17 @@ This is a **markdown renderer** with version control!
 * Second characteristic
 - Alternative bullet style
 - Another point
-    * Indented sub-point (4 spaces)
-    * Another sub-point
+  * Indented sub-point (2 spaces)
+  * Another sub-point
+    - Another sub-sub-point
 
 ### Numbered Lists (for sequences)
 1. First step in the process
 2. Second step to follow
 3. Final step to complete
-    1. Sub-step with indentation
-    2. Another sub-step
+  1. Sub-step with indentation
+  2. Another sub-step
+    1. Another sub-sub-step
 
 ---
 
@@ -343,6 +366,33 @@ function hello() {
                   lineHeight: "1.6",
                 }}
               />
+              <style dangerouslySetInnerHTML={{
+                __html: `
+                  .prose p {
+                    margin-bottom: 0.5rem !important;
+                  }
+                  .prose ul {
+                    list-style-type: disc !important;
+                    padding-left: 1.5rem !important;
+                    margin: 0.75rem 0 !important;
+                  }
+                  .prose ol {
+                    list-style-type: decimal !important;
+                    padding-left: 1.5rem !important;
+                    margin: 0.75rem 0 !important;
+                  }
+                  .prose li {
+                    margin: 0.5rem 0 !important;
+                    display: list-item !important;
+                  }
+                  .prose ul ul {
+                    list-style-type: circle !important;
+                  }
+                  .prose ul ul ul {
+                    list-style-type: square !important;
+                  }
+                `
+              }} />
             </Card>
           </div>
         </div>
