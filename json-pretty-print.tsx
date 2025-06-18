@@ -24,7 +24,7 @@ export default function JSONPrettyPrint() {
   const [versions, setVersions] = useState<JSONVersion[]>([
     {
       id: 1,
-      content: `{"name":"John Doe","age":30,"city":"New York","hobbies":["reading","swimming","coding"],"address":{"street":"123 Main St","zipCode":"10001","country":"USA"},"isActive":true,"balance":1250.75,"metadata":null}`,
+      content: `{"name":"John Doe","age":30,"city":"New York","hobbies1":["readingreadingreadingreadingreadingreadingreadingreadingreadingreading","swimming","coding"],"hobbies2":["reading","swimming","coding"],"hobbies3":["reading","swimming","coding"],"address":{"street":"123 Main St","zipCode":"10001","country":"USA"},"isActive":true,"balance":1250.75,"metadata":null}`,
       timestamp: new Date(),
     },
   ])
@@ -92,7 +92,7 @@ export default function JSONPrettyPrint() {
     }
   }
 
-  const prettyJSON = prettyPrintJSON(currentContent)
+  const prettyJSON = prettyPrintJSON(currentContent);
 
   return (
     <div className="h-screen flex flex-col bg-gray-50">
@@ -163,20 +163,20 @@ export default function JSONPrettyPrint() {
               <Copy className="h-4 w-4" />
             </Button>
           </div>
-          <div className="flex-1 flex">
+          <div className="flex-1 flex overflow-auto">
             <Card className="m-4 h-[calc(100%-2rem)] flex-1 flex">
-              <div className="flex h-full overflow-auto">
+              <div className="flex h-full overflow-auto w-full">
                 {/* Line Numbers */}
-                <div className="bg-gray-50 border-r border-gray-200 px-2 py-6 text-right flex-shrink-0">
+                <div className="py-1 flex-shrink-0">
                   <pre className="text-sm font-mono text-gray-500 leading-6">
                     {prettyJSON.split("\n").map((_, index) => (
-                      <div key={index}>{index + 1}</div>
+                      <div key={index} className="bg-gray-50 border-r border-gray-200 px-2 text-right">{index + 1}</div>
                     ))}
                   </pre>
                 </div>
                 {/* JSON Content */}
                 <div className="flex-1">
-                  <pre className="p-6 h-full overflow-auto text-sm font-mono whitespace-pre-wrap leading-6">
+                  <pre className="px-6 py-1 h-full text-sm font-mono leading-6">
                     {prettyJSON}
                   </pre>
                 </div>
