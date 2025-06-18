@@ -28,14 +28,15 @@ function parseMarkdown(markdown: string): string {
   // Horizontal rules (---)
   result = result.replace(/^---$/gm, "<hr class='my-4' />")
 
+  // Bold and Italic (only if not protected by backticks)
+  result = result.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+  result = result.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, "<em>$1</em>"); // "[^*\n]+" means it only excludes * and newline, not the letter "n"
+
+
   // Headers
   result = result.replace(/^### (.*$)/gim, "<h3 class='text-lg font-bold mt-1'>$1</h3>")
   result = result.replace(/^## (.*$)/gim, "<h2 class='text-xl font-bold mt-2'>$1</h2>")
   result = result.replace(/^# (.*$)/gim, "<h1 class='text-2xl font-bold'>$1</h1>")
-
-  // Bold and Italic (only if not protected by backticks)
-  result = result.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-  result = result.replace(/(?<!\*)\*([^*n]+)\*(?!\*)/g, "<em>$1</em>")
 
   // Links
   result = result.replace(/\[([^\]]*)\]\(([^)]*)\)/g, "<a href='$2' target='_blank' rel='noopener noreferrer' class='text-blue-700 hover:text-blue-800 underline'>$1</a>")
