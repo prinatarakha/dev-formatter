@@ -143,7 +143,7 @@ export default function JSONPrettyPrint() {
       <div className="flex-1 flex overflow-hidden">
         {/* Left Side - JSON Input */}
         <div className="w-1/2 flex flex-col border-r border-gray-200">
-          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200">
+          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200 flex items-center justify-between h-10">
             <h2 className="text-sm font-semibold text-gray-700">JSON Input</h2>
           </div>
           <div className="flex-1 p-4">
@@ -158,7 +158,7 @@ export default function JSONPrettyPrint() {
 
         {/* Right Side - Pretty Printed Output */}
         <div className="w-1/2 flex flex-col">
-          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200 flex items-center justify-between">
+          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200 flex items-center justify-between h-10">
             <h2 className="text-sm font-semibold text-gray-700">Pretty Printed JSON</h2>
             <Button variant="ghost" size="sm" onClick={copyToClipboard} className="h-8 w-8 p-0">
               <Copy className="h-4 w-4" />

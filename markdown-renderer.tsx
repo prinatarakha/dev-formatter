@@ -324,7 +324,7 @@ function hello() {
       <div className="flex-1 flex overflow-hidden">
         {/* Left Side - Markdown Input */}
         <div className="w-1/2 flex flex-col border-r border-gray-200">
-          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200">
+          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200 flex items-center justify-between h-10">
             <h2 className="text-sm font-semibold text-gray-700">Markdown Input</h2>
           </div>
           <div className="flex-1 p-4">
@@ -339,7 +339,7 @@ function hello() {
 
         {/* Right Side - Rendered Output */}
         <div className="w-1/2 flex flex-col">
-          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200">
+          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200 flex items-center justify-between h-10">
             <h2 className="text-sm font-semibold text-gray-700">Rendered Output</h2>
           </div>
           <div className="flex-1 overflow-auto">

@@ -152,7 +152,7 @@ export default function StringPrettyPrint() {
       <div className="flex-1 flex overflow-hidden">
         {/* Left Side - String Input */}
         <div className="w-1/2 flex flex-col border-r border-gray-200">
-          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200">
+          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200 flex items-center justify-between h-10">
             <h2 className="text-sm font-semibold text-gray-700">String Input</h2>
           </div>
           <div className="flex-1 p-4">
@@ -167,7 +167,7 @@ export default function StringPrettyPrint() {
 
         {/* Right Side - Pretty Printed Output */}
         <div className="w-1/2 flex flex-col">
-          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200 flex items-center justify-between">
+          <div className="bg-gray-100 px-4 py-2 border-b border-gray-200 flex items-center justify-between h-10">
             <h2 className="text-sm font-semibold text-gray-700">Escaped String</h2>
             <Button variant="ghost" size="sm" onClick={copyToClipboard} className="h-8 w-8 p-0">
               <Copy className="h-4 w-4" />
@@ -175,7 +175,7 @@ export default function StringPrettyPrint() {
           </div>
           <div className="flex-1 overflow-auto">
             <Card className="m-4 h-[calc(100%-2rem)]">
-              <pre className="p-6 h-full overflow-auto text-sm font-mono whitespace-pre-wrap bg-gray-50">
+              <pre className="p-4 h-full overflow-auto text-sm font-mono whitespace-pre-wrap">
                 {prettyString}
               </pre>
             </Card>
