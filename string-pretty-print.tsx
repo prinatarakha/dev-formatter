@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Save, Plus, Copy } from "lucide-react"
+import NavigationHeader from "@/components/navigation-header"
 
 function prettyPrintString(inputString: string): string {
   // Show the actual string representation with escaped characters
@@ -108,7 +109,7 @@ export default function StringPrettyPrint() {
       {/* Header */}
       <div className="bg-white border-b border-gray-200 p-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">Escape String</h1>
+          <NavigationHeader currentTool="Escape String" />
 
           <div className="flex items-center gap-2">
             {/* Version Navigation */}

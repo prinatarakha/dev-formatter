@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Save, Plus, Copy } from "lucide-react"
+import NavigationHeader from "@/components/navigation-header"
 
 function prettyPrintJSON(jsonString: string): string {
   try {
@@ -99,7 +100,7 @@ export default function JSONPrettyPrint() {
       {/* Header */}
       <div className="bg-white border-b border-gray-200 p-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">JSON Pretty Print</h1>
+          <NavigationHeader currentTool="JSON Pretty Print" />
 
           <div className="flex items-center gap-2">
             {/* Version Navigation */}

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Save, Plus } from "lucide-react"
+import NavigationHeader from "@/components/navigation-header"
 
 // Enhanced markdown parser with proper escaping and formatting
 function parseMarkdown(markdown: string): string {
@@ -32,11 +33,10 @@ function parseMarkdown(markdown: string): string {
   result = result.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
   result = result.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, "<em>$1</em>"); // "[^*\n]+" means it only excludes * and newline, not the letter "n"
 
-
   // Headers
-  result = result.replace(/^### (.*$)/gim, "<h3 class='text-lg font-bold mt-1'>$1</h3>")
-  result = result.replace(/^## (.*$)/gim, "<h2 class='text-xl font-bold mt-2'>$1</h2>")
-  result = result.replace(/^# (.*$)/gim, "<h1 class='text-2xl font-bold'>$1</h1>")
+  result = result.replace(/^### (.*$)/gim, "<h3 class='text-lg font-semibold mt-1'>$1</h3>")
+  result = result.replace(/^## (.*$)/gim, "<h2 class='text-xl font-semibold mt-2'>$1</h2>")
+  result = result.replace(/^# (.*$)/gim, "<h1 class='text-2xl font-semibold'>$1</h1>")
 
   // Links
   result = result.replace(/\[([^\]]*)\]\(([^)]*)\)/g, "<a href='$2' target='_blank' rel='noopener noreferrer' class='text-blue-700 hover:text-blue-800 underline'>$1</a>")
@@ -138,6 +138,7 @@ function parseMarkdown(markdown: string): string {
 
   // Convert double line breaks to paragraph breaks
   result = result.replace(/\n\s*\n/g, "</p>\n<p>")
+  // result = result.replace(/(?:[ \t]*\n){3}/g, "</p>\n<p class='pt-8'>");
 
   // Convert single line breaks to <br> (except around block elements)
   result = result.replace(/\n(?!<\/?(h[1-6]|ul|ol|li|pre|hr|p))/g, "<br>")
@@ -192,46 +193,29 @@ This is a **markdown renderer** with version control!
 
 ---
 
-## How to Use Lists
-
 ### Bullet Points (use \`*\` or \`-\`)
-* First idea or plot point
-* Second characteristic
-- Alternative bullet style
-- Another point
+* Use **backticks** to show literal characters: \`*\`, \`**\`, \`#\`
+* The \`*\` character won't make italic when wrapped in backticks
+- Same with \`**\` for bold formatting
   * Indented sub-point (2 spaces)
   * Another sub-point
     - Another sub-sub-point
 
 ### Numbered Lists (for sequences)
-1. First step in the process
-2. Second step to follow
-3. Final step to complete
-  1. Sub-step with indentation
+1. **Links** work like [this](https://rakha.id)
+2. **Inline code:** \`console.log("Hello")\`
+3. **Horizontal line:** use \`---\`
+  1. Indented sub-point (2 spaces)
   2. Another sub-step
     1. Another sub-sub-step
 
----
-
-### Escaping Characters
-
-- Use backticks to show literal characters: \`*\`, \`**\`, \`#\`
-- The \`*\` character won't make italic when wrapped in backticks
-- Same with \`**\` for bold formatting
-- Links work like [this](https://example.com)
-
-### Code Examples
-
-Inline code: \`console.log("Hello")\`
-
-Code blocks:
+### Code Blocks
 \`\`\`
 function hello() {
   console.log("Hello, World!");
   return true;
 }
 \`\`\`
-
 ---
 
 **Happy writing!**`,
@@ -297,7 +281,7 @@ function hello() {
       {/* Header */}
       <div className="bg-white border-b border-gray-200 p-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">Markdown Renderer</h1>
+          <NavigationHeader currentTool="Markdown Renderer" />
 
           <div className="flex items-center gap-2">
             {/* Version Navigation */}
