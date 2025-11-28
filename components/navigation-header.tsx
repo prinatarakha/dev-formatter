@@ -13,6 +13,7 @@ const tools = [
   { name: "JSON Pretty Print", path: "/json" },
   { name: "Escape String", path: "/escape" },
   { name: "Unescape String", path: "/unescape" },
+  { name: "Refine AI Prompt", path: "/refine-prompt" },
 ]
 
 export default function NavigationHeader({ currentTool }: NavigationHeaderProps) {
