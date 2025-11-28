@@ -5,10 +5,10 @@ import { NextRequest, NextResponse } from 'next/server';
  */
 export function checkReferer(request: NextRequest): boolean {
   const referer = request.headers.get('referer');
-  const allowedDomain = process.env.DEV_FORMATTER_DOMAIN;
+  const allowedDomainsStr = process.env.WHITELISTED_DOMAINS;
 
-  if (!allowedDomain) {
-    console.error('DEV_FORMATTER_DOMAIN environment variable is not set');
+  if (!allowedDomainsStr) {
+    console.error('WHITELISTED_DOMAINS environment variable is not set');
     return false;
   }
 
@@ -16,12 +16,17 @@ export function checkReferer(request: NextRequest): boolean {
     return false;
   }
 
+  const allowedDomains = allowedDomainsStr.split(",");
+
   try {
     const refererUrl = new URL(referer);
-    const allowedUrl = new URL(allowedDomain);
-    return refererUrl.hostname === allowedUrl.hostname;
+    const isAllowed = allowedDomains.some(domain => {
+      const allowedUrl = new URL(domain);
+      return refererUrl.hostname === allowedUrl.hostname;
+    });
+    return isAllowed;
   } catch (error) {
-    console.error('Error parsing referer or domain:', error);
+    console.error('Error parsing referer or domains:', error);
     return false;
   }
 }

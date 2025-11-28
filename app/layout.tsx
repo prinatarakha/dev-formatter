@@ -9,8 +9,8 @@ import { Analytics } from "@vercel/analytics/next"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Dev Formatter",
-  description: "Markdown renderer, JSON pretty print, and escape/unescape string tools",
+  title: "Tools for Developers",
+  description: "JSON, string, markdown, and more tools for software engineers",
   generator: 'rakha.id',
 }
 
