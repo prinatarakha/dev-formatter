@@ -1,4 +1,4 @@
-import { checkReferer, unauthorizedResponse } from '@/lib/api-utils';
+import { checkReferer, checkUserAgent, unauthorizedResponse } from '@/lib/api-utils';
 import { groqPrompt } from '@/lib/llm';
 import { convertToStandardSchema } from '@/lib/schema-utils';
 import { NextRequest, NextResponse } from 'next/server';
@@ -155,6 +155,11 @@ export const GENERATE_JSON_SCHEMA_RESPONSE_SCHEMA = {
 export async function POST(request: NextRequest) {
   // Check referer authentication
   if (!checkReferer(request)) {
+    return unauthorizedResponse();
+  }
+
+  // Check user agent authentication
+  if (!checkUserAgent(request)) {
     return unauthorizedResponse();
   }
 

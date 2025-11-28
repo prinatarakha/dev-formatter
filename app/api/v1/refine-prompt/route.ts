@@ -1,4 +1,4 @@
-import { checkReferer, unauthorizedResponse } from '@/lib/api-utils';
+import { checkReferer, checkUserAgent, unauthorizedResponse } from '@/lib/api-utils';
 import { groqPrompt, openRouterPrompt } from '@/lib/llm';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -75,6 +75,11 @@ const REFINED_PROMPT_JSON_RESPONSE_SCHEMA = {
 export async function POST(request: NextRequest) {
   // Check referer authentication
   if (!checkReferer(request)) {
+    return unauthorizedResponse();
+  }
+
+  // Check user agent authentication
+  if (!checkUserAgent(request)) {
     return unauthorizedResponse();
   }
 
